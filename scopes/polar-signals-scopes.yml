@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: searched
+source: well-known/polar-signals-oauth-authorization-server.json
+docs: https://www.polarsignals.com/docs/single-sign-on
+context: >-
+  These are OIDC login scopes advertised by the Polar Signals OAuth 2.0
+  Authorization Server (RFC 8414) at issuer https://identity.polarsignals.com,
+  used for interactive CLI / dashboard sign-in (authorization-code + PKCE).
+  API-level authorization for the gRPC/Connect API is RBAC (roles/permissions),
+  not OAuth scopes; automation uses service-account bearer tokens.
+schemes:
+- name: OAuth2
+  source: well-known/polar-signals-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://cloud.polarsignals.com/login/cli
+    tokenUrl: https://identity.polarsignals.com/token
+    pkce: S256
+scopes:
+- scope: openid
+  description: Standard OpenID Connect scope; issue an ID token.
+  flows: [authorizationCode]
+- scope: email
+  description: Access the user's email address.
+  flows: [authorizationCode]
+- scope: profile
+  description: Access the user's basic profile information.
+  flows: [authorizationCode]
+- scope: groups
+  description: Access the user's group memberships (used for SSO role mapping).
+  flows: [authorizationCode]
+- scope: offline_access
+  description: Issue a refresh token for long-lived offline access.
+  flows: [authorizationCode]

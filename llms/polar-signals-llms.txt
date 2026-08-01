@@ -1,0 +1,45 @@
+# Polar Signals
+
+> Continuous profiling for production systems. Polar Signals Cloud uses eBPF to
+> profile CPU, memory and NVIDIA GPU workloads across Kubernetes, Docker, ECS
+> and bare metal with under 1% overhead and no code changes, storing profiles
+> in the open-source FrostDB columnar database and querying them with
+> Prometheus-style label selectors. Built by the team behind the open-source
+> Parca project.
+
+## APIs
+
+- [Polar Signals Cloud API (gRPC/Connect)](https://buf.build/polarsignals/api): organizations, projects, service accounts, tokens, RBAC roles, rate limits, billing
+- [Profiling data plane](https://www.polarsignals.com/docs/generating-tokens): grpc.polarsignals.com:443 (profile uploads), api.polarsignals.com:443 (symbol/debuginfo uploads); Parca-compatible
+
+## Specs
+
+- [Protobuf: ProjectService](grpc/polar-signals-project.proto)
+- [Protobuf: OrganizationService](grpc/polar-signals-organization.proto)
+- [Protobuf: ServiceAccountService](grpc/polar-signals-serviceaccount.proto)
+- [Protobuf: RoleService](grpc/polar-signals-role.proto)
+- [Protobuf: BillingService](grpc/polar-signals-billing.proto)
+- [OAuth 2.0 Authorization Server Metadata](well-known/polar-signals-oauth-authorization-server.json)
+
+## Artifacts
+
+- [MCP server](mcp/polar-signals-mcp.yml): get_projects, profile_types, labels, values, get_profile
+- [Authentication](authentication/polar-signals-authentication.yml): service-account bearer tokens + OAuth2/PKCE login + OIDC SSO
+- [Packages / SDKs](packages/polar-signals-packages.yml): psctl, pprofme, otel-profiling-go, @polarsignals/pprof, jemalloc_pprof
+- [CLI: psctl](cli/polar-signals-cli.yml)
+- [Data model](data-model/polar-signals-data-model.yml)
+- [Conventions](conventions/polar-signals-conventions.yml)
+- [Conformance](conformance/polar-signals-conformance.yml)
+- [Lifecycle](lifecycle/polar-signals-lifecycle.yml)
+- [Agent skills](skills/_index.yml)
+
+## Docs
+
+- [Documentation](https://www.polarsignals.com/docs/overview)
+- [Quick start](https://www.polarsignals.com/docs/quick-start-guide)
+- [Generating tokens](https://www.polarsignals.com/docs/generating-tokens)
+- [MCP server](https://www.polarsignals.com/docs/mcp)
+- [Security posture](https://www.polarsignals.com/docs/security-posture)
+- [Pricing](https://www.polarsignals.com/pricing)
+- [Status](https://polarsignals.instatus.com/)
+- [GitHub](https://github.com/polarsignals)

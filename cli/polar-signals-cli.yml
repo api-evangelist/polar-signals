@@ -1,0 +1,44 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/polarsignals/psctl
+name: psctl
+description: First-party command-line interface for interacting with Polar Signals Cloud.
+binary: psctl
+package: github.com/polarsignals/psctl
+license: Apache-2.0
+releases:
+- version: v0.2.0
+  date: '2026-06-02'
+- version: v0.1.0
+  date: '2026-02-10'
+install:
+- method: go
+  command: go install github.com/polarsignals/psctl@latest
+- method: source
+  command: git clone https://github.com/polarsignals/psctl && make build
+commands:
+- group: auth
+  commands:
+  - name: auth login
+    description: Authenticate with Polar Signals using the OAuth 2.0 device flow.
+    flags:
+    - name: --no-open
+      description: Print the verification URL instead of opening a browser automatically.
+  - name: auth status
+    description: Check the current authentication status.
+auth:
+  style: oauth2-device-login + service-account-bearer-token
+  notes: >-
+    Interactive login uses the OAuth 2.0 authorization-code + PKCE flow against
+    identity.polarsignals.com (see well-known/); automation uses service-account
+    bearer tokens (psc_v1_...) via the Authorization header.
+related_tools:
+- name: parca (agent / debuginfo push)
+  docs: https://www.polarsignals.com/docs/install-parca-push
+- name: pprofme
+  package: github.com/polarsignals/pprofme
+  docs: https://github.com/polarsignals/pprofme
+notes: >-
+  Command surface is not exhaustively published in the docs; psctl is the
+  supported CLI for organization, project, and token management against the
+  Polar Signals Cloud gRPC/Connect API.

@@ -1,0 +1,14 @@
+generated: '2026-07-20'
+method: generated
+source: mcp/polar-signals-mcp.yml + grpc/
+skills:
+- file: polar-signals-analyze-performance.md
+  name: Analyze production performance with Polar Signals
+  api: mcp/polar-signals-mcp.yml
+  surface: mcp
+  operations: [get_projects, profile_types, labels, values, get_profile]
+- file: polar-signals-provision-project.md
+  name: Provision a Polar Signals project and ingest token
+  api: grpc/polar-signals-project.proto
+  surface: grpc
+  operations: [GetOrganizations, CreateProject, CreateServiceAccount, CreateServiceAccountToken, CreateProjectToken]

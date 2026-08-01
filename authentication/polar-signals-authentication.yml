@@ -1,0 +1,49 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://www.polarsignals.com/docs/generating-tokens
+- https://www.polarsignals.com/docs/single-sign-on
+- well-known/polar-signals-oauth-authorization-server.json
+summary:
+  types: [http, oauth2, openIdConnect]
+  http_scheme: bearer
+  oauth2_flows: [authorizationCode]
+  api_key_in: []
+schemes:
+- name: ServiceAccountToken
+  type: http
+  scheme: bearer
+  token_format: psc_v1_<64-hex>
+  in: header
+  header: Authorization
+  applies_to: Polar Signals Cloud gRPC/Connect API and profiling data plane
+  notes: >-
+    Service-account tokens replace the older JWT approach and provide granular
+    per-token permissions via RBAC roles. Passed as Authorization: Bearer; the
+    agent uses --remote-store-bearer-token-file. The target project is selected
+    separately through the projectID gRPC metadata header
+    (--remote-store-grpc-headers), decoupling project assignment from token
+    permissions. Tokens are shown once at creation; only a hash is stored.
+- name: OAuth2 (CLI / dashboard login)
+  type: oauth2
+  flow: authorizationCode
+  pkce: S256
+  issuer: https://identity.polarsignals.com
+  authorization_endpoint: https://cloud.polarsignals.com/login/cli
+  token_endpoint: https://identity.polarsignals.com/token
+  registration_endpoint: https://api.polarsignals.com/api/oauth/register
+  token_endpoint_auth_methods: [none]
+  grant_types: [authorization_code, refresh_token]
+  scopes: [openid, email, groups, profile, offline_access]
+  source: well-known/polar-signals-oauth-authorization-server.json
+- name: SSO / OIDC
+  type: openIdConnect
+  provider: Dex-based OIDC (github.com/polarsignals/dex)
+  notes: >-
+    Organizations can enable Single Sign-On (SAML/OIDC) with a default role for
+    SSO-provisioned users. Configured via OrganizationService EnableSSO /
+    GetSSOSettings / UpdateSSODefaultRole.
+authorization_model: >-
+  RBAC — roles, role bindings and permissions are managed via RoleService
+  (ListRoles/CreateRole/CreateRoleBinding/ListPermissions) and enforced by
+  AuthorizationService.CanI.

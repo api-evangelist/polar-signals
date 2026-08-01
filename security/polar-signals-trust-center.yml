@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: searched
+probe: false
+url: https://www.polarsignals.com/docs/security-posture
+certifications:
+- SOC 2 Type II
+programs:
+- Yearly third-party penetration testing
+- Encryption in transit and at rest
+- Role-based access control
+compliance_notes: >-
+  Polar Signals is SOC 2 Type II compliant and undergoes annual third-party
+  penetration testing. Profiling data is designed to avoid PII, payloads,
+  tokens and secrets (eBPF sends function memory offsets only). No standalone
+  trust.polarsignals.com portal was found; the security-posture documentation
+  page is the published compliance surface.
+evidence:
+- source: https://www.polarsignals.com/docs/security-posture
+  keywords: [soc 2 type ii, penetration testing, encrypted in transit and at rest, rbac]

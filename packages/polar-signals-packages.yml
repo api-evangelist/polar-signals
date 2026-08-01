@@ -1,0 +1,72 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/polarsignals
+packages:
+- language: go
+  registry: go
+  name: github.com/polarsignals/psctl
+  url: https://github.com/polarsignals/psctl
+  install: go install github.com/polarsignals/psctl@latest
+  official: true
+  role: cli
+  description: CLI to interact with Polar Signals Cloud.
+- language: go
+  registry: go
+  name: github.com/polarsignals/pprofme
+  url: https://github.com/polarsignals/pprofme
+  install: go install github.com/polarsignals/pprofme@latest
+  official: true
+  role: cli
+  description: Easily share pprof formatted profiles from your terminal.
+- language: go
+  registry: go
+  name: github.com/polarsignals/otel-profiling-go
+  url: https://pkg.go.dev/github.com/polarsignals/otel-profiling-go
+  install: go get github.com/polarsignals/otel-profiling-go
+  official: true
+  role: sdk
+  description: Connect OpenTelemetry distributed tracing with profiling data.
+- language: go
+  registry: go
+  name: github.com/polarsignals/frostdb
+  url: https://pkg.go.dev/github.com/polarsignals/frostdb
+  install: go get github.com/polarsignals/frostdb
+  official: true
+  role: library
+  description: Embeddable columnar database that backs Polar Signals storage.
+- language: javascript
+  registry: npm
+  name: "@polarsignals/pprof"
+  url: https://www.npmjs.com/package/@polarsignals/pprof
+  install: npm install @polarsignals/pprof
+  official: true
+  role: sdk
+  description: Node.js profiling library that automatically uploads heap/CPU profiles.
+- language: javascript
+  registry: npm
+  name: "@polarsignals/sourcemap-cli"
+  url: https://www.npmjs.com/package/@polarsignals/sourcemap-cli
+  install: npm install -D @polarsignals/sourcemap-cli
+  official: true
+  role: cli
+  description: Inject debug IDs and upload source maps for JavaScript profiling.
+- language: javascript
+  registry: npm
+  name: "@polarsignals/sourcemap-esbuild-plugin"
+  url: https://www.npmjs.com/package/@polarsignals/sourcemap-esbuild-plugin
+  install: npm install -D @polarsignals/sourcemap-esbuild-plugin
+  official: true
+  role: plugin
+  description: esbuild plugin injecting debug IDs into JavaScript bundles.
+- language: rust
+  registry: crates.io
+  name: jemalloc_pprof
+  url: https://crates.io/crates/jemalloc_pprof
+  install: cargo add jemalloc_pprof
+  official: true
+  role: sdk
+  description: Convert jemalloc heap profiles to pprof for Rust memory analysis.
+notes: >-
+  Language collection agents (Go, Rust, Python, Node.js, JVM, .NET, PHP, Ruby,
+  Erlang, Julia) are documented per-language under polarsignals.com/docs; most
+  profiling is agentless via the eBPF host agent rather than an in-process SDK.

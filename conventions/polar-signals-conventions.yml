@@ -1,0 +1,50 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://www.polarsignals.com/docs/generating-tokens
+- https://www.polarsignals.com/docs/labels
+- grpc/
+protocol:
+  style: gRPC / Connect (ConnectRPC over HTTP/2)
+  registry: https://buf.build/polarsignals/api
+  data_plane: grpc.polarsignals.com:443
+  control_plane: api.polarsignals.com:443
+authentication:
+  style: bearer
+  header: Authorization
+  token_format: psc_v1_<64-hex> (service account tokens)
+  see: authentication/polar-signals-authentication.yml
+project_selection:
+  mechanism: gRPC metadata header
+  header: projectID
+  notes: >-
+    The target project is passed as gRPC metadata (projectID), decoupled from
+    the token, e.g. agent flag --remote-store-grpc-headers.
+querying:
+  language: PromQL-style label selectors
+  labels: >-
+    Profiles are tagged with Prometheus-style metadata labels; discover keys
+    with the labels endpoint and values with the values endpoint, then select
+    with get_profile / query.
+  see: https://www.polarsignals.com/docs/labels
+pagination:
+  style: not-documented
+  notes: >-
+    List RPCs (GetProjects, GetOrganizations, ListServiceAccounts, ListRoles,
+    GetInvoices) return full collections; no cursor/page-token fields are
+    declared in the published v1alpha1 protobufs.
+idempotency:
+  supported: false
+  notes: >-
+    No documented idempotency-key header/parameter. Create/Update/Delete RPCs
+    are standard unary gRPC calls; no Idempotency pointer is emitted.
+error_envelope:
+  style: gRPC status codes (google.rpc.Status)
+  notes: >-
+    Errors surface as gRPC/Connect status codes and messages; see
+    errors handling via Connect status mapping.
+versioning:
+  see: lifecycle/polar-signals-lifecycle.yml
+rate_limiting:
+  mechanism: RateLimitService.GetLimitFromProject + ratelimit.proto
+  notes: Per-project rate limits are modeled in polarsignals/ratelimit/v1alpha1.

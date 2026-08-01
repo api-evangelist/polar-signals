@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package polarsignals.ratelimit.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/limits";
+
+// RateLimitService resolves the rate limit that applies to a project.
+//
+// Admin CRUD for rate limit overrides lives in
+// polarsignals.admin.v1alpha1.AdminService, not here.
+service RateLimitService {
+  // GetLimitFromProject returns the rate limit for the given project.
+  rpc GetLimitFromProject(GetLimitFromProjectRequest) returns (GetLimitFromProjectResponse) {
+    option (google.api.http) = {get: "/v1/{project_id}/{name}"};
+  }
+}
+
+// GetLimitFromProjectRequest is the request for the GetLimitFromProject method.
+message GetLimitFromProjectRequest {
+  // The project ID.
+  string project_id = 1;
+  // The name of the rate limit.
+  string name = 2;
+}
+
+// GetLimitFromProjectResponse is the response for the GetLimitFromProject method.
+message GetLimitFromProjectResponse {
+  // The rate limit.
+  Limit limit = 1;
+}
+
+// Limit represents a rate limit.
+message Limit {
+  // name is the name of the limit.
+  string name = 1;
+  // limit is the number of requests allowed per unit.
+  float limit = 2;
+  // burst is the number of requests allowed in a burst.
+  int32 burst = 3;
+}

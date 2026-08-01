@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://buf.build/polarsignals/api
+- https://polarsignals.instatus.com/
+- https://www.polarsignals.com/docs/migrate-agents
+versioning:
+  scheme: protobuf-package-version
+  current: v1alpha1
+  docs: https://buf.build/polarsignals/api
+  notes: >-
+    API messages/services are versioned per protobuf package
+    (polarsignals.<service>.v1alpha1) and published to the Buf Schema Registry
+    at buf.build/polarsignals/api.
+status_page: https://polarsignals.instatus.com/
+sla:
+  url: null
+  uptime_target: null
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No formal RFC 8594 Sunset/Deprecation-header policy was found. Migration
+    guides exist for agent/scraper/debuginfo/GitHub-Actions changes under
+    polarsignals.com/docs/migrate-*, indicating a documented migration path
+    rather than a versioned deprecation contract.
+migration_guides:
+- https://www.polarsignals.com/docs/migrate-agents
+- https://www.polarsignals.com/docs/migrate-scrapers
+- https://www.polarsignals.com/docs/migrate-debuginfo-uploads
+- https://www.polarsignals.com/docs/migrate-github-actions-profiling

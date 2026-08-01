@@ -1,0 +1,46 @@
+generated: '2026-07-20'
+method: searched
+source:
+- well-known/polar-signals-oauth-authorization-server.json
+- https://www.polarsignals.com/docs/security-posture
+- grpc/
+standards:
+- id: grpc
+  conforms: true
+  evidence: services published as gRPC in buf.build/polarsignals/api
+- id: connectrpc
+  conforms: true
+  evidence: Connect/ConnectRPC transport used for the Polar Signals Cloud API
+- id: protobuf
+  conforms: true
+  evidence: protobuf v1alpha1 packages published to the Buf Schema Registry
+- id: oauth2
+  conforms: true
+  evidence: RFC 8414 authorization-server metadata with authorization_code + refresh_token grants
+- id: oidc
+  conforms: true
+  evidence: openid scope + Dex-based OIDC issuer identity.polarsignals.com
+- id: pkce
+  conforms: true
+  evidence: code_challenge_methods_supported = [S256]
+- id: rfc8414-oauth-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint advertised in authorization-server metadata
+- id: pprof
+  conforms: true
+  evidence: profiles ingested/emitted in Google pprof format (Parca-compatible)
+- id: prometheus-remote-write
+  conforms: true
+  evidence: Prometheus-style label selectors + remote-store agent model
+- id: soc2
+  conforms: true
+  evidence: SOC 2 Type II compliance published on the security-posture page
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: gRPC/Connect status codes used rather than application/problem+json
+- id: rest
+  conforms: false
+  evidence: API is gRPC/Connect, not a REST/OpenAPI surface

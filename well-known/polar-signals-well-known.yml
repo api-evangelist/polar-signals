@@ -1,0 +1,49 @@
+generated: '2026-07-20'
+method: searched
+source: probed /.well-known/ across polar-signals hosts on 2026-07-20
+hosts:
+- host: https://api.polarsignals.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: polar-signals-oauth-authorization-server.json
+    standard: RFC 8414 (OAuth 2.0 Authorization Server Metadata)
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://identity.polarsignals.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: polar-signals-openid-configuration.json
+    standard: OpenID Connect Discovery 1.0
+- host: https://www.polarsignals.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://cloud.polarsignals.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+notes: >-
+  The OAuth 2.0 Authorization Server Metadata document (RFC 8414) advertises
+  issuer https://identity.polarsignals.com, authorization-code + refresh-token
+  grants, PKCE (S256), dynamic client registration (RFC 7591), and the OIDC
+  scopes openid/email/groups/profile/offline_access.

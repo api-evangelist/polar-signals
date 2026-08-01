@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package polarsignals.user.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/user";
+
+// UserService provides the ability to manage users.
+service UserService {
+  // GetSelf returns the user information for the authenticated user.
+  rpc GetSelf(GetSelfRequest) returns (GetSelfResponse) {
+    option (google.api.http) = {get: "/v1/self"};
+  }
+
+  // UpdateSelf updates the user information for the authenticated user.
+  rpc UpdateSelf(UpdateSelfRequest) returns (UpdateSelfResponse) {
+    option (google.api.http) = {
+      patch: "/v1/self"
+      body: "*"
+    };
+  }
+
+  // ListSharedProfiles returns the list of profiles shared by the authenticated user.
+  rpc ListSharedProfiles(ListSharedProfilesRequest) returns (ListSharedProfilesResponse) {
+    option (google.api.http) = {get: "/v1/self/shared-profiles"};
+  }
+
+  // UpdateProductTours updates the product tours completed for the user.
+  rpc UpdateUserProductTours(UpdateUserProductToursRequest) returns (UpdateUserProductToursResponse) {
+    option (google.api.http) = {
+      post: "/v1/users/{user_id}/product-tours"
+      body: "*"
+    };
+  }
+}
+
+// UserOrganizationRole represents the role of a user in an organization.
+message UserOrganizationRole {
+  // The unique identifier of the organization.
+  string organization_id = 1;
+  // The role of the user in the organization.
+  string role = 2;
+}
+
+// User represents a user.
+message User {
+  // The unique identifier of the user.
+  string id = 1;
+  // The name of the user.
+  string name = 2;
+  // The email address of the user.
+  string email = 3;
+  // The company of the user.
+  string company = 4;
+  // The time when the user was created.
+  google.protobuf.Timestamp created_at = 5;
+  // The time when the user was last updated.
+  google.protobuf.Timestamp updated_at = 6;
+  // The time when the user was last logged in.
+  google.protobuf.Timestamp last_login_at = 12;
+  // the feature flags enabled for the user.
+  repeated string feature_flags = 7;
+  // Auth provider of the user.
+  string auth_provider = 8;
+  // the product tours completed for the user.
+  repeated string product_tours = 9;
+  // the user's roles.
+  repeated UserOrganizationRole roles = 10;
+  // the user's timezone.
+  string timezone = 11;
+}
+
+// GetSelfRequest is the request for the GetSelf method.
+message GetSelfRequest {}
+
+// GetSelfResponse is the response for the GetSelf method.
+message GetSelfResponse {
+  // The user information.
+  User user = 1;
+}
+
+// UpdateSelfRequest is the request for the UpdateSelf method.
+message UpdateSelfRequest {
+  // The user information to update.
+  User user = 1;
+}
+
+// UpdateSelfResponse is the response for the UpdateSelf method.
+message UpdateSelfResponse {}
+
+message ListSharedProfilesRequest {}
+
+message SharedProfile {
+  // The unique identifier of the profile.
+  string id = 1;
+  // The pprof.me slug of the profile
+  string slug = 2;
+  // the description of the profile.
+  string description = 3;
+  // The user who created the profile.
+  string user_id = 4;
+  // The time when the profile was created.
+  google.protobuf.Timestamp created_at = 5;
+  // The time when the profile was last updated.
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListSharedProfilesResponse {
+  repeated SharedProfile shared_profiles = 1;
+}
+
+// UpdateUserProductToursRequest is the request for the UpdateUserProductTours method.
+message UpdateUserProductToursRequest {
+  // The ID of the user.
+  string user_id = 1;
+  // The name of the tour.
+  string tour_name = 2;
+}
+
+// UpdateUserProductToursResponse is the response for the UpdateUserProductTours method.
+message UpdateUserProductToursResponse {}

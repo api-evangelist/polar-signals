@@ -1,8 +1,17 @@
 aid: polar-signals
 name: Polar Signals
-description: 'Polar Signals is a company surfaced as a portfolio company of gv, lightspeed-venture-partners
-  and added to the API Evangelist network as a stub for enrichment. Sector: enterprise. This profile is
-  a lead awaiting the enrichment pipeline.'
+description: >-
+  Polar Signals is a continuous profiling company built by the team behind the
+  open-source Parca project. Its Polar Signals Cloud product uses eBPF to
+  continuously profile CPU, memory, and NVIDIA GPU workloads across Kubernetes,
+  Docker, ECS, and bare metal with under 1% overhead and no code changes,
+  storing profiles in the open-source FrostDB columnar database and querying
+  them with Prometheus-style label selectors and PromQL. It exposes a
+  gRPC/Connect API (published at buf.build/polarsignals/api) for managing
+  organizations, projects, service accounts, roles, RBAC, and billing; a
+  Parca-compatible profiling data plane at grpc.polarsignals.com; a hosted MCP
+  server for AI-assisted performance analysis; language agents and SDKs for Go,
+  Rust, Python, Node.js, JVM, .NET, PHP, Ruby and more; and the psctl CLI.
 url: https://raw.githubusercontent.com/api-evangelist/polar-signals/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,18 +20,118 @@ x-backed-by:
 - lightspeed-venture-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://avatars.githubusercontent.com/u/71665167?v=4
 tags:
 - Company
 - Enterprise
-apis: []
+- Observability
+- Continuous Profiling
+- Performance
+- eBPF
+- gRPC
+- Developer Tools
+- MCP
+- GPU
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Polar Signals Cloud API
+  description: >-
+    gRPC/Connect API for managing Polar Signals Cloud organizations, projects,
+    service accounts, tokens, roles/RBAC, rate limits, and billing, plus a
+    Parca-compatible profiling data plane for uploading and querying profiles.
+  humanURL: https://buf.build/polarsignals/api
+  baseURL: https://api.polarsignals.com
+  properties:
+  - type: Protobuf
+    url: grpc/polar-signals-project.proto
+  - type: Protobuf
+    url: grpc/polar-signals-organization.proto
+  - type: Protobuf
+    url: grpc/polar-signals-serviceaccount.proto
 common:
+- type: DomainSecurity
+  url: security/polar-signals-domain-security.yml
 - type: Website
-  url: http://polarsignals.com
+  url: https://www.polarsignals.com
+- type: DeveloperPortal
+  url: https://www.polarsignals.com/docs
+- type: Documentation
+  url: https://www.polarsignals.com/docs/overview
+- type: APIReference
+  url: https://buf.build/polarsignals/api
+- type: GettingStarted
+  url: https://www.polarsignals.com/docs/quick-start-guide
+- type: Support
+  url: https://www.polarsignals.com/docs/contact-support
+- type: Blog
+  url: https://www.polarsignals.com/blog
+- type: GitHubOrganization
+  url: https://github.com/polarsignals
+- type: Pricing
+  url: https://www.polarsignals.com/pricing
+- type: SignUp
+  url: https://cloud.polarsignals.com/signup
+- type: PrivacyPolicy
+  url: https://www.polarsignals.com/privacy
+- type: StatusPage
+  url: https://polarsignals.instatus.com/
+- type: Protobuf
+  url: grpc/polar-signals-project.proto
+- type: MCPServer
+  url: mcp/polar-signals-mcp.yml
+- type: Packages
+  url: packages/polar-signals-packages.yml
+- type: SDKs
+  url: packages/polar-signals-packages.yml
+- type: CLI
+  url: cli/polar-signals-cli.yml
+- type: Authentication
+  url: authentication/polar-signals-authentication.yml
+- type: OAuthScopes
+  url: scopes/polar-signals-scopes.yml
+- type: WellKnown
+  url: well-known/polar-signals-well-known.yml
+- type: Lifecycle
+  url: lifecycle/polar-signals-lifecycle.yml
+- type: Conventions
+  url: conventions/polar-signals-conventions.yml
+- type: DataModel
+  url: data-model/polar-signals-data-model.yml
+- type: Conformance
+  url: conformance/polar-signals-conformance.yml
+- type: Compliance
+  url: https://www.polarsignals.com/docs/security-posture
+- type: TrustCenter
+  url: security/polar-signals-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/polar-signals-vulnerability-disclosure.yml
+- type: Security
+  url: security/polar-signals-vulnerability-disclosure.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/polar-signals-llms.txt
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1

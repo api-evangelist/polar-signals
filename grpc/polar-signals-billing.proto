@@ -1,0 +1,273 @@
+syntax = "proto3";
+
+package polarsignals.billing.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/billing";
+
+// BillingService service provides the ability to manage billing accounts.
+service BillingService {
+  // GetConfig returns the billing configuration.
+  rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
+    option (google.api.http) = {get: "/v1/config"};
+  }
+
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
+    option (google.api.http) = {get: "/v1/subscriptions/{organization_id}"};
+  }
+
+  // CreateSession creates a new billing session.
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1/sessions"
+      body: "*"
+    };
+  }
+
+  // GetInvoicesUpcoming returns the upcoming invoices.
+  rpc GetInvoicesUpcoming(GetInvoicesUpcomingRequest) returns (GetInvoicesUpcomingResponse) {
+    option (google.api.http) = {get: "/v1/invoices/upcoming/{organization_id}"};
+  }
+
+  // GetInvoices returns the invoices.
+  rpc GetInvoices(GetInvoicesRequest) returns (GetInvoicesResponse) {
+    option (google.api.http) = {get: "/v1/invoices/{organization_id}"};
+  }
+
+  // CancelSubscription cancels the subscription.
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
+    option (google.api.http) = {delete: "/v1/subscriptions/{organization_id}"};
+  }
+
+  rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse) {
+    option (google.api.http) = {get: "/v1/customers/{organization_id}"};
+  }
+
+  rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse) {
+    option (google.api.http) = {
+      patch: "/v1/customers/{organization_id}"
+      body: "*"
+    };
+  }
+
+  // GetCurrentUsage returns the current billing period's data usage metrics.
+  rpc GetCurrentUsage(GetCurrentUsageRequest) returns (GetCurrentUsageResponse) {
+    option (google.api.http) = {get: "/v1/usage/current/{organization_id}"};
+  }
+}
+
+// GetConfigRequest is the request for the GetConfig method.
+message GetConfigRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// GetConfigResponse is the response for the GetConfig method.
+message GetConfigResponse {
+  // Public key of the Stripe API.
+  string publishable_key = 1;
+}
+
+message Card {
+  // Card brand.
+  string brand = 1;
+  // Last 4 digits of the card.
+  string last4 = 2;
+  // Expiration month of the card.
+  int32 exp_month = 3;
+  // Expiration year of the card.
+  int32 exp_year = 4;
+}
+
+message PoBilling {}
+
+// PaymentMethod represents a payment method of a subscription.
+message PaymentMethod {
+  Card card = 1;
+}
+
+message GetSubscriptionRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message Coupon {
+  // Coupon ID.
+  string id = 1;
+  // Coupon Name.
+  string name = 2;
+  // Discount Percent.
+  int32 percent_off = 3;
+  // Discount Amount.
+  int32 amount_off = 4;
+  // Discount flat fee.
+  int32 amount_flat = 5;
+}
+
+message Discount {
+  oneof discount {
+    Coupon coupon = 1;
+  }
+}
+
+message GetSubscriptionResponse {
+  string id = 1;
+  string status = 2;
+  google.protobuf.Timestamp created = 3;
+  oneof payment_method {
+    Card card = 4;
+    PoBilling po_billing = 5;
+  }
+  Discount discount = 6;
+}
+
+// CreateSessionRequest is the request for the CreateSession method.
+message CreateSessionRequest {
+  // Organization ID.
+  string organization_id = 1;
+  // Plan ID.
+  string price_id = 2;
+  // redirect_to helps to determine where to redirect to after a successful subscription.
+  string redirect_to = 3;
+}
+
+// CreateSessionResponse is the response for the CreateSession method.
+message CreateSessionResponse {
+  // Session ID.
+  string session_id = 1;
+}
+
+// GetInvoicesUpcomingRequest is the request for the GetInvoicesUpcoming method.
+message GetInvoicesUpcomingRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// GetInvoicesUpcomingResponse is the response for the GetInvoicesUpcoming method.
+message GetInvoicesUpcomingResponse {
+  // Amount due of the upcoming invoice.
+  int32 amount_due = 1;
+  // Currency of the upcoming invoice.
+  string currency = 2;
+  // The start of the period of the upcoming invoice.
+  int32 period_start = 3;
+  // The end of the period of the upcoming invoice.
+  int32 period_end = 4;
+  // The quantity of the subscription item being paid for by this upcoming invoice.
+  int32 quantity = 5;
+  // The unit price of the subscription item being paid for by this upcoming invoice.
+  int32 unit_amount = 6;
+}
+
+// GetInvoicesRequest is the request for the GetInvoices method.
+message GetInvoicesRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// Invoice represents an invoice.
+message Invoice {
+  // Amount due of the upcoming invoice.
+  int32 amount_due = 1;
+  // Currency of the upcoming invoice.
+  string currency = 2;
+  // The start of the period of the upcoming invoice.
+  int32 period_start = 3;
+  // The end of the period of the upcoming invoice.
+  int32 period_end = 4;
+  // The quantity of the subscription item being paid for by this upcoming invoice.
+  int32 quantity = 5;
+  // The unit price of the subscription item being paid for by this upcoming invoice.
+  int32 unit_amount = 6;
+  // Number of the invoice.
+  string number = 7;
+  // Status of the invoice.
+  string status = 8;
+  // PDF of the invoice.
+  string invoice_pdf = 9;
+}
+
+// GetInvoicesResponse is the response for the GetInvoices method.
+message GetInvoicesResponse {
+  // Invoices.
+  repeated Invoice invoices = 1;
+}
+
+// CancelSubscriptionRequest is the request for the CancelSubscription method.
+message CancelSubscriptionRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// CancelSubscriptionResponse is the response for the CancelSubscription method.
+message CancelSubscriptionResponse {}
+
+message GetCustomerRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message GetCustomerResponse {
+  // Customer name.
+  string customer_name = 1;
+
+  // Customer email.
+  string customer_email = 2;
+}
+
+message UpdateCustomerRequest {
+  // Organization ID.
+  string organization_id = 1;
+
+  // Customer name.
+  string customer_name = 2;
+
+  // Customer email.
+  string customer_email = 3;
+}
+
+message UpdateCustomerResponse {}
+
+// GetCurrentUsageRequest is the request for the GetCurrentUsage method.
+message GetCurrentUsageRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message ProjectUsage {
+  // Project ID.
+  string project_id = 1;
+
+  // Project name.
+  string project_name = 2;
+
+  // Project usage.
+  int64 bytes = 3;
+
+  // Project usage in samples.
+  int64 samples = 4;
+}
+
+message MetricsItem {
+  // timestamp of the metrics.
+  google.protobuf.Timestamp timestamp = 1;
+
+  repeated ProjectUsage project_usage = 2;
+}
+
+message CurrentUsage {
+  // total usage.
+  int64 total_usage = 1;
+
+  // usage metrics.
+  repeated MetricsItem metrics = 2;
+}
+
+
+// GetCurrentUsageResponse is the response for the GetCurrentUsage method.
+message GetCurrentUsageResponse {
+  // Current usage.
+  CurrentUsage current_usage = 1;
+}

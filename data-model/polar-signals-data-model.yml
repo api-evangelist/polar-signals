@@ -1,0 +1,68 @@
+generated: '2026-07-20'
+method: derived
+source:
+- grpc/polar-signals-organization.proto
+- grpc/polar-signals-project.proto
+- grpc/polar-signals-serviceaccount.proto
+- grpc/polar-signals-role.proto
+- grpc/polar-signals-user.proto
+- grpc/polar-signals-billing.proto
+- https://www.polarsignals.com/docs/organizations-and-projects
+entities:
+- name: Organization
+  description: Top-level tenant; a collection of projects and users. One org per company.
+  service: OrganizationService
+  relationships:
+  - {type: has_many, target: Project, via: organization_id}
+  - {type: has_many, target: User, via: organization membership}
+  - {type: has_many, target: Role, via: organization}
+  - {type: has_one, target: Subscription, via: billing}
+- name: Project
+  description: Workspace for profile data within an organization; hard data-isolation boundary.
+  service: ProjectService
+  relationships:
+  - {type: belongs_to, target: Organization, via: organization_id}
+  - {type: has_many, target: Token, via: project token}
+  - {type: has_many, target: Debuginfo, via: project}
+- name: User
+  description: Human member of an organization with access to all its projects.
+  service: UserService
+  relationships:
+  - {type: belongs_to, target: Organization, via: membership}
+  - {type: has_many, target: RoleBinding, via: user}
+- name: ServiceAccount
+  description: Non-human principal that owns bearer tokens (psc_v1_) for automation.
+  service: ServiceAccountService
+  relationships:
+  - {type: belongs_to, target: Organization, via: organization}
+  - {type: has_many, target: Token, via: service account token}
+- name: Role
+  description: RBAC role with permissions; bound to principals via RoleBinding.
+  service: RoleService
+  relationships:
+  - {type: has_many, target: Permission, via: role}
+  - {type: has_many, target: RoleBinding, via: role}
+- name: RoleBinding
+  description: Binds a Role to a user or service account.
+  service: RoleService
+  relationships:
+  - {type: belongs_to, target: Role, via: role_id}
+- name: Token
+  description: Bearer credential issued to a project or service account (shown once).
+  relationships:
+  - {type: belongs_to, target: ServiceAccount, via: service_account_id}
+- name: Subscription
+  description: Billing subscription, usage, invoices and customer for an organization.
+  service: BillingService
+  relationships:
+  - {type: belongs_to, target: Organization, via: organization}
+  - {type: has_many, target: Invoice, via: subscription}
+- name: RateLimit
+  description: Per-project rate-limit configuration.
+  service: RateLimitService
+  relationships:
+  - {type: belongs_to, target: Project, via: project}
+notes: >-
+  Derived from the first-party protobuf definitions (buf.build/polarsignals/api)
+  plus the organizations-and-projects docs. The profiling data plane (profiles,
+  labels, debuginfo) is Parca-compatible (buf.build/parca-dev/parca).
