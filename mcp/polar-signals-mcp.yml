@@ -6,19 +6,18 @@ blog: https://www.polarsignals.com/blog/posts/2025/07/17/the-mcp-for-performance
 server:
   name: polar-signals
   transport: http
-  url: https://api.polarsignals.com/api/mcp/   # trailing slash required
-  auth: >-
-    Bearer token in the Authorization header (generate from project settings in
-    Polar Signals Cloud, or the "AI" section of the dashboard); connects an MCP
-    client against the user's projects (service-account / OAuth session).
+  url: https://api.polarsignals.com/api/mcp/
+  auth: Bearer token in the Authorization header (generate from project settings in Polar Signals Cloud,
+    or the "AI" section of the dashboard); connects an MCP client against the user's projects (service-account
+    / OAuth session).
   clients:
-    claude_code: 'claude mcp add --transport http polarsignals https://api.polarsignals.com/api/mcp/ --header "Authorization: Bearer <TOKEN>"'
-    cursor: '{"mcpServers":{"polarsignals":{"url":"https://api.polarsignals.com/api/mcp/","headers":{"Authorization":"Bearer <TOKEN>"}}}}'
-description: >-
-  Official Model Context Protocol server that lets AI assistants (Claude,
-  Cursor, Copilot, Gemini) query Polar Signals continuous-profiling data using
-  natural language, discover projects and profile types, explore labels, and
-  pull profiles via PromQL-style selectors.
+    claude_code: 'claude mcp add --transport http polarsignals https://api.polarsignals.com/api/mcp/ --header
+      "Authorization: Bearer <TOKEN>"'
+    cursor: '{"mcpServers":{"polarsignals":{"url":"https://api.polarsignals.com/api/mcp/","headers":{"Authorization":"Bearer
+      <TOKEN>"}}}}'
+description: Official Model Context Protocol server that lets AI assistants (Claude, Cursor, Copilot,
+  Gemini) query Polar Signals continuous-profiling data using natural language, discover projects and
+  profile types, explore labels, and pull profiles via PromQL-style selectors.
 tools:
 - name: get_projects
   description: List the projects the authenticated user can access.
@@ -30,3 +29,10 @@ tools:
   description: Get the values for a specific label key.
 - name: get_profile
   description: Query and retrieve a profile using PromQL-style label selectors.
+deployment:
+  mode: remote
+  endpoint: https://api.polarsignals.com/api/mcp/
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
