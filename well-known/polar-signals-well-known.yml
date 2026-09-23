@@ -1,4 +1,4 @@
-generated: '2026-07-20'
+generated: '2026-09-19'
 method: searched
 source: probed /.well-known/ across polar-signals hosts on 2026-07-20
 hosts:
@@ -16,6 +16,11 @@ hosts:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: polar-signals-api-oauth-protected-resource.json
+    bytes: 221
+  path_echo_control: passed
 - host: https://identity.polarsignals.com
   documents:
   - path: /.well-known/openid-configuration
@@ -42,8 +47,19 @@ hosts:
     status: 404
   - path: /.well-known/oauth-authorization-server
     status: 404
-notes: >-
-  The OAuth 2.0 Authorization Server Metadata document (RFC 8414) advertises
-  issuer https://identity.polarsignals.com, authorization-code + refresh-token
-  grants, PKCE (S256), dynamic client registration (RFC 7591), and the OIDC
-  scopes openid/email/groups/profile/offline_access.
+notes: The OAuth 2.0 Authorization Server Metadata document (RFC 8414) advertises issuer https://identity.polarsignals.com,
+  authorization-code + refresh-token grants, PKCE (S256), dynamic client registration (RFC 7591), and
+  the OIDC scopes openid/email/groups/profile/offline_access.
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://api.polarsignals.com
+    path: /.well-known/oauth-protected-resource
+    file: polar-signals-api-oauth-protected-resource.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'

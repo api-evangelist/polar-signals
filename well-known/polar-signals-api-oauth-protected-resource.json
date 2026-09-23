@@ -1,0 +1,1 @@
+{"resource":"https://api.polarsignals.com/api/mcp","authorization_servers":["https://api.polarsignals.com"],"scopes_supported":["openid","email","groups","profile","offline_access"],"bearer_methods_supported":["header"]}
