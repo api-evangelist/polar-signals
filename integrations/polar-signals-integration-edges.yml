@@ -31,12 +31,124 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
+- partner_name: Go module proxy
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official SDK (Go)
+  evidence: https://pkg.go.dev/github.com/polarsignals/frostdb
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/polarsignals/frostdb
+      version: v0.0.0-20260121113628-9e5cfe0171ad
+      released: '2026-01-21'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/polarsignals/frostdb
+      repo_leg: github-org:polarsignals
+      publisher_leg: org:polarsignals
+      matched_by: github-org
+    - name: github.com/polarsignals/otel-profiling-go
+      version: v0.0.0-20241015163710-c734d4992912
+      released: '2024-10-15'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/polarsignals/otel-profiling-go
+      repo_leg: github-org:polarsignals
+      publisher_leg: org:polarsignals
+      matched_by: github-org
+    - name: github.com/polarsignals/pprofme
+      version: v0.1.0
+      released: '2022-10-12'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/polarsignals/pprofme
+      repo_leg: github-org:polarsignals
+      publisher_leg: org:polarsignals
+      matched_by: github-org
+    - name: github.com/polarsignals/psctl
+      version: v0.2.0
+      released: '2026-06-02'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/polarsignals/psctl
+      repo_leg: github-org:polarsignals
+      publisher_leg: org:polarsignals
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@polarsignals/pprof
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@polarsignals/pprof'
+      version: 0.1.3
+      released: '2026-05-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@polarsignals/pprof
+      repo_leg: github-org:polarsignals
+      publisher_leg: email:polarsignals.com
+      matched_by: domain
+    - name: '@polarsignals/sourcemap-cli'
+      version: 0.1.4
+      released: '2026-04-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@polarsignals/sourcemap-cli
+      repo_leg: github-org:polarsignals
+      publisher_leg: email:polarsignals.com
+      matched_by: domain
+    - name: '@polarsignals/sourcemap-esbuild-plugin'
+      version: 0.1.6
+      released: '2026-04-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@polarsignals/sourcemap-esbuild-plugin
+      repo_leg: github-org:polarsignals
+      publisher_leg: email:polarsignals.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 generated: '2026-10-15'
 method: searched
 source:
 - https://github.com/cncf/landscape
 - https://github.com/cncf/k8s-conformance
 checked:
+- https://api.nuget.org/v3
+- https://crates.io/api/v1
 - https://focus.finops.org/data-generators/
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
